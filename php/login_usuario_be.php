@@ -10,7 +10,8 @@
     $validar_login = mysqli_query($conexion, "SELECT * FROM users WHERE email='$email' and password='$password'");
 
     if(mysqli_num_rows($validar_login) > 0 ){
-        $_SESSION['user'] = $email;
+        $usuario = mysqli_fetch_assoc($validar_login);
+        $_SESSION['user'] = $usuario['username'];
         header("location: ../bienvenida.php");
         exit;
     }else{

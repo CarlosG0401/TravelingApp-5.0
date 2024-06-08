@@ -315,3 +315,22 @@ header {
     text-decoration: underline;
     color: aqua;
 }
+
+header .header-user {
+    color: white;
+    margin-right: 20px; 
+    margin-left: 20px;
+}
+
+.navigation a,
+.header-user {
+    font-size: 1.1em;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.navigation .btnLogin-popup,
+.navigation a:hover,
+.header-user:hover {
+    color: aqua; 
+}
