@@ -1,3 +1,13 @@
+<?php
+
+    session_start();
+
+    if(isset($_SESSION['user'])){
+        header("location: bienvenida.php");
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,17 +54,17 @@
         </span>
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="#">
+            <form action="php/login_usuario_be.php" method="post">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail-sharp"></ion-icon></span>
-                    <input type="email" required>
+                    <input type="email" name="email" required>
                     <label>Email</label>
                 </div>
                 <div class="input-box">
                         <span class="icon">
                             <ion-icon name="lock-closed-sharp"></ion-icon>
                             </span>
-                            <input type="password" required>
+                            <input type="password" name="password" required>
                             <label>Contraseña</label>
                         </div>
                         <div class="remember-forgot">
