@@ -39,11 +39,11 @@
     </div>
 
     <div class="search-container">
-        <form class="search-form">
-            <input type="text" placeholder="Lugar de Origen" class="search-input">
-            <input type="text" placeholder="Lugar de Destino" class="search-input">
-            <input type="date" class="search-input">
-            <input type="number" placeholder="Cantidad de Personas" class="search-input">
+        <form class="search-form" action="buscar_viajes.php" method="post">
+            <input type="text" name="origen" placeholder="Lugar de Origen" class="search-input" required>
+            <input type="text" name="destino" placeholder="Lugar de Destino" class="search-input" required>
+            <input type="date" name="fecha" class="search-input" required>
+            <input type="number" name="cantidad" placeholder="Cantidad de Personas" class="search-input" required>
             <button type="submit" class="search-btn">Buscar</button>
         </form>
     </div>
