@@ -43,7 +43,7 @@
             <input type="text" name="origen" placeholder="Lugar de Origen" class="search-input" required>
             <input type="text" name="destino" placeholder="Lugar de Destino" class="search-input" required>
             <input type="date" name="fecha" class="search-input" required>
-            <input type="number" name="cantidad" placeholder="Cantidad de Personas" class="search-input" required>
+            <input type="number" name="dias" placeholder="Cantidad de Días" class="search-input" required>
             <button type="submit" class="search-btn">Buscar</button>
         </form>
     </div>
