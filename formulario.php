@@ -27,7 +27,7 @@
         
     </header>
     
-    <section class="zona1"></section>
+    <section class="zona1">
         <div class="form-container">
             <h1>Datos Personales</h1>
             <form id="personalForm">
@@ -66,11 +66,12 @@
                         <option value="extranjera">Extranjera</option>
                     </select>
                 </div>
-                <button type="submit">Enviar</button>
+                <button type="submit" id="submitButton">Enviar</button>
             </form>
         </div>
+    </section>
     <section class="zona2">
-        <div id="extraForm" style="display: none;">
+        <div id="extraForm" class="form-container extra-form-container" style="display: none;">
             <h2>Documentación</h2>
             <form>
                 <div class="form-group">
@@ -117,7 +118,7 @@
                     <label for="consejosViaje">¿Desea consejos para su viaje?</label>
                     <input type="checkbox" id="consejosViaje" name="consejosViaje">
                 </div>
-                <button type="submit">Enviar</button>
+                <button type="submit" id="submitButtonExtra">Enviar</button>
             </form>
         </div>
     </section>
@@ -131,10 +132,13 @@
         function toggleForm(){
             var nacionalidad =document.getElementById("nacionalidad").value;
             var extraForm = document.getElementById("extraForm");
+            var submitButton =document.getElementById("submitButton");
             if (nacionalidad == "extranjera"){
                 extraForm.style.display = "block";
+                submitButton.style.display = "none";
             } else {
                 extraForm.style.display = "none";
+                submitButton.style.display = "block";
             }
         }
     </script>
