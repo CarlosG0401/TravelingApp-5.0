@@ -47,7 +47,7 @@ if (!$result) {
                 echo "<tr>";
                 echo "<td>$" . $row['precio_ida'] . "</td>";
                 echo "<td>$" . $row['precio_ida_vuelta'] . "</td>";
-                echo "<td><button class='btn'>Rellenar</button></td>";
+                echo "<td><a href='formulario.php?precio_ida=" . $row['precio_ida'] . "&precio_ida_vuelta=" . $row['precio_ida_vuelta'] . "' class='btn'>Rellenar</a></td>";
                 echo "</tr>";
             }
             echo "</table>";

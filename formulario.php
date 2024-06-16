@@ -1,5 +1,6 @@
 <?php
-
+$precio_ida = isset($_GET['precio_ida']) ? $_GET['precio_ida'] : '';
+$precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelta'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -33,19 +34,19 @@
             <form id="personalForm">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre">
+                    <input type="text" id="nombre" name="nombre" required>
                 </div>
                 <div class="form-group">
                     <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido">
+                    <input type="text" id="apellido" name="apellido" required>
                 </div>
                 <div class="form-group">
                     <label for="edad">Edad</label>
-                        <input type="number" id="edad" name="edad">
+                        <input type="number" id="edad" name="edad" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="sexo">Sexo</label>
@@ -57,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                    <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
                 </div>
                 <div class="form-group">
                     <label for="nacionalidad">Nacionalidad</label>
@@ -84,22 +85,22 @@
                 </div>
                 <div class="form-group">
                     <label for="documento">Documento</label>
-                    <select id="documento" name="documento">
+                    <select id="documento" name="documento" required>
                     <option value="rut">RUT</option>
                     <option value="pasaporte">Pasaporte</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="fechaEmision">Fecha de Emisión</label>
-                    <input type="date" id="fechaEmision" name="fechaEmision">
+                    <input type="date" id="fechaEmision" name="fechaEmision" required>
                 </div>
                 <div class="form-group">
                     <label for="fechaExpiracion">Fecha de Expiración</label>
-                    <input type="date" id="fechaExpiracion" name="fechaExpiracion">
+                    <input type="date" id="fechaExpiracion" name="fechaExpiracion" required>
                 </div>
                 <div class="form-group">
                     <label for="tipoVisa">Tipo de Visa</label>
-                    <select id="tipoVisa" name="tipoVisa">
+                    <select id="tipoVisa" name="tipoVisa" required>
                         <option value="definitivo">Definitivo</option>
                         <option value="democratica">Democrática</option>
                         <option value="estudiante">Estudiante</option>
@@ -108,11 +109,11 @@
                 </div>
                 <div class="form-group">
                     <label for="nroID">Nro. ID</label>
-                    <input type="text" id="nroID" name="nroID">
+                    <input type="text" id="nroID" name="nroID" required>
                 </div>
                 <div class="form-group">
                     <label for="nroDocumento">Nro. De Documento</label>
-                    <input type="text" id="nroDocumento" name="nroDocumento">
+                    <input type="text" id="nroDocumento" name="nroDocumento" required>
                 </div>
                 <div class="form-group">
                     <label for="consejosViaje">¿Desea consejos para su viaje?</label>
