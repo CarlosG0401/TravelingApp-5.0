@@ -1,8 +1,3 @@
-<?php
-$precio_ida = isset($_GET['precio_ida']) ? $_GET['precio_ida'] : '';
-$precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelta'] : '';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +10,6 @@ $precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelt
     <header>
         <h2 class="logo">
             <img src="assets/images/imagen-foto-removebg-preview.png" alt="Logo" class="logo-img">
-            
         </h2>
         <nav class="navigation">
             <a href="#">Home</a>
@@ -23,9 +17,7 @@ $precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelt
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
             <button class="btnLogin-popup">Login</button>
-            
         </nav>
-        
     </header>
     
     <section class="zona1">
@@ -42,7 +34,7 @@ $precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelt
                 </div>
                 <div class="form-group">
                     <label for="edad">Edad</label>
-                        <input type="number" id="edad" name="edad" required>
+                    <input type="number" id="edad" name="edad" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -71,9 +63,61 @@ $precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelt
             </form>
         </div>
     </section>
+
     <section class="zona2">
-        <div id="extraForm" class="form-container extra-form-container" style="display: none;">
-            <h2>Documentación</h2>
+        <div id="extraFormChilena" class="form-container extra-form-container" style="display: none;">
+            <h2>Documentación Chilena</h2>
+            <form>
+                <div class="form-group">
+                    <label for="documentoChilena">Documento</label>
+                    <select id="documentoChilena" name="documento" required>
+                        <option value="rut">RUT</option>
+                        <option value="pasaporte">Pasaporte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fechaEmisionChilena">Fecha de Emisión</label>
+                    <input type="date" id="fechaEmisionChilena" name="fechaEmision" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaExpiracionChilena">Fecha de Expiración</label>
+                    <input type="date" id="fechaExpiracionChilena" name="fechaExpiracion" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipoVisaChilena">Tipo de Visa</label>
+                    <select id="tipoVisaChilena" name="tipoVisa" required onchange="toggleVisaWaiverFields()">
+                        <option value="N/A">N/A</option>
+                        <option value="visa_waiver">Visa Waiver</option>
+                    </select>
+                </div>
+                <div id="visaWaiverFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="fechaEmisionVW">Fecha de Emisión - VW</label>
+                        <input type="date" id="fechaEmisionVW" name="fechaEmisionVW" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaExpiracionVW">Fecha de Expiración - VW</label>
+                        <input type="date" id="fechaExpiracionVW" name="fechaExpiracionVW" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nroIDChilena">Nro. ID</label>
+                    <input type="text" id="nroIDChilena" name="nroID" required>
+                </div>
+                <div class="form-group">
+                    <label for="nroDocumentoChilena">Nro. De Documento</label>
+                    <input type="text" id="nroDocumentoChilena" name="nroDocumento" required>
+                </div>
+                <div class="form-group">
+                    <label for="consejosViajeChilena">¿Desea consejos para su viaje?</label>
+                    <input type="checkbox" id="consejosViajeChilena" name="consejosViaje">
+                </div>
+                <button type="submit" id="submitButtonChilena">Enviar</button>
+            </form>
+        </div>
+
+        <div id="extraFormExtranjera" class="form-container extra-form-container" style="display: none;">
+            <h2>Documentación Extranjera</h2>
             <form>
                 <div class="form-group">
                     <label for="extraNacionalidad">Nacionalidad</label>
@@ -86,8 +130,8 @@ $precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelt
                 <div class="form-group">
                     <label for="documento">Documento</label>
                     <select id="documento" name="documento" required>
-                    <option value="rut">RUT</option>
-                    <option value="pasaporte">Pasaporte</option>
+                        <option value="rut">RUT</option>
+                        <option value="pasaporte">Pasaporte</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -127,25 +171,45 @@ $precio_ida_vuelta = isset($_GET['precio_ida_vuelta']) ? $_GET['precio_ida_vuelt
     <script type="text/javascript">
         window.addEventListener("scroll", function(){
             var header = document.querySelector("header");
-            header.classList.toggle("abajo",window.scrollY>0)
+            header.classList.toggle("abajo", window.scrollY > 0);
         });
 
         function toggleForm(){
-            var nacionalidad =document.getElementById("nacionalidad").value;
-            var extraForm = document.getElementById("extraForm");
-            var submitButton =document.getElementById("submitButton");
-            if (nacionalidad == "extranjera"){
-                extraForm.style.display = "block";
+            var nacionalidad = document.getElementById("nacionalidad").value;
+            var extraFormChilena = document.getElementById("extraFormChilena");
+            var extraFormExtranjera = document.getElementById("extraFormExtranjera");
+            var submitButton = document.getElementById("submitButton");
+            
+            if(nacionalidad === "chilena"){
+                extraFormChilena.style.display = "block";
+                extraFormExtranjera.style.display = "none";
+                submitButton.style.display = "none";
+            } else if(nacionalidad === "extranjera"){
+                extraFormChilena.style.display = "none";
+                extraFormExtranjera.style.display = "block";
                 submitButton.style.display = "none";
             } else {
-                extraForm.style.display = "none";
+                extraFormChilena.style.display = "none";
+                extraFormExtranjera.style.display = "none";
                 submitButton.style.display = "block";
             }
         }
-    </script>
 
-    <script src="assets/script/scripts.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        function toggleVisaWaiverFields() {
+            var tipoVisa = document.getElementById("tipoVisaChilena").value;
+            var visaWaiverFields = document.getElementById("visaWaiverFields");
+            
+            if(tipoVisa === "visa_waiver"){
+                visaWaiverFields.style.display = "block";
+            } else {
+                visaWaiverFields.style.display = "none";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function(){
+            toggleForm();  // To show/hide forms based on default selection
+        });
+    </script>
 </body>
 </html>
+
