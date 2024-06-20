@@ -1,3 +1,77 @@
+<?php
+    include 'php/conexion_be.php';
+
+    // Verificamos que el formulario fue enviado
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // Datos personales
+        $nombre = mysqli_real_escape_string($conexion, isset($_POST['nombre']) ? $_POST['nombre'] : '');
+        $apellido = mysqli_real_escape_string($conexion, isset($_POST['apellido']) ? $_POST['apellido'] : '');
+        $edad = mysqli_real_escape_string($conexion, isset($_POST['edad']) ? $_POST['edad'] : '');
+        $email = mysqli_real_escape_string($conexion, isset($_POST['email']) ? $_POST['email'] : '');
+        $sexo = mysqli_real_escape_string($conexion, isset($_POST['sexo']) ? $_POST['sexo'] : '');
+        $fecha_nacimiento = mysqli_real_escape_string($conexion, isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : '');
+        $nacionalidad = mysqli_real_escape_string($conexion, isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : '');
+
+        // Insertar datos personales en la tabla datos_personales
+        $query_personales = "INSERT INTO datos_personales (nombre, apellido, edad, email, sexo, fecha_nacimiento, nacionalidad) VALUES ('$nombre', '$apellido', '$edad', '$email', '$sexo', '$fecha_nacimiento', '$nacionalidad')";
+
+        if(mysqli_query($conexion, $query_personales)){
+            $datos_personales_id = mysqli_insert_id($conexion);
+
+            if($nacionalidad == 'chilena'){
+                // Documentación para nacionalidad chilena
+                $tipo_documento = mysqli_real_escape_string($conexion, isset($_POST['documentoChilena']) ? $_POST['documentoChilena'] : '');
+                $fecha_emision = mysqli_real_escape_string($conexion, isset($_POST['fechaEmisionChilena']) ? $_POST['fechaEmisionChilena'] : '');
+                $fecha_expiracion = mysqli_real_escape_string($conexion, isset($_POST['fechaExpiracionChilena']) ? $_POST['fechaExpiracionChilena'] : '');
+                $tipo_visa = mysqli_real_escape_string($conexion, isset($_POST['tipoVisaChilena']) ? $_POST['tipoVisaChilena'] : '');
+                $nro_id = mysqli_real_escape_string($conexion, isset($_POST['nroIDChilena']) ? $_POST['nroIDChilena'] : '');
+                $nro_documento = mysqli_real_escape_string($conexion, isset($_POST['nroDocumentoChilena']) ? $_POST['nroDocumentoChilena'] : '');
+                $consejos_viaje = isset($_POST['consejosViajeChilena']) ? 1 : 0;
+
+                $fecha_emision_vw = $tipo_visa == 'visa_waiver' && isset($_POST['fechaEmisionVW']) ? $_POST['fechaEmisionVW'] : null;
+                $fecha_expiracion_vw = $tipo_visa == 'visa_waiver' && isset($_POST['fechaExpiracionVW']) ? $_POST['fechaExpiracionVW'] : null;
+
+                // Insertar datos de documentación para nacionalidad chilena
+                $query_documentacion = "INSERT INTO documentacion (datos_personales_id, tipo_documento, fecha_emision, fecha_expiracion, tipo_visa, fecha_emision_vw, fecha_expiracion_vw, nro_id, nro_documento, consejos_viaje)
+                                        VALUES ('$datos_personales_id', '$tipo_documento', '$fecha_emision', '$fecha_expiracion', '$tipo_visa', 
+                                        " . ($fecha_emision_vw ? "'$fecha_emision_vw'" : "NULL") . ", 
+                                        " . ($fecha_expiracion_vw ? "'$fecha_expiracion_vw'" : "NULL") . ", '$nro_id', '$nro_documento', '$consejos_viaje')";
+                
+                if(mysqli_query($conexion, $query_documentacion)){
+                    echo "Datos insertados correctamente";
+                } else {
+                    echo "Error al insertar datos de documentación: ". mysqli_error($conexion);
+                }
+            } elseif($nacionalidad == 'extranjera') {
+                // Documentación para nacionalidad extranjera
+                $extra_nacionalidad = mysqli_real_escape_string($conexion, isset($_POST['extraNacionalidad']) ? $_POST['extraNacionalidad'] : '');
+                $tipo_documento = mysqli_real_escape_string($conexion, isset($_POST['documento']) ? $_POST['documento'] : '');
+                $fecha_emision = mysqli_real_escape_string($conexion, isset($_POST['fechaEmision']) ? $_POST['fechaEmision'] : '');
+                $fecha_expiracion = mysqli_real_escape_string($conexion, isset($_POST['fechaExpiracion']) ? $_POST['fechaExpiracion'] : '');
+                $tipo_visa = mysqli_real_escape_string($conexion, isset($_POST['tipoVisa']) ? $_POST['tipoVisa'] : '');
+                $nro_id = mysqli_real_escape_string($conexion, isset($_POST['nroID']) ? $_POST['nroID'] : '');
+                $nro_documento = mysqli_real_escape_string($conexion, isset($_POST['nroDocumento']) ? $_POST['nroDocumento'] : '');
+                $consejos_viaje = isset($_POST['consejosViaje']) ? 1 : 0;
+
+                // Insertar datos de documentación para nacionalidad extranjera
+                $query_documentacion = "INSERT INTO documentacion (datos_personales_id, tipo_documento, fecha_emision, fecha_expiracion, tipo_visa, nro_id, nro_documento, consejos_viaje) VALUES ('$datos_personales_id', '$tipo_documento', '$fecha_emision', '$fecha_expiracion', '$tipo_visa', '$nro_id', '$nro_documento', '$consejos_viaje')";
+                
+                if(mysqli_query($conexion, $query_documentacion)){
+                    echo "Datos insertados correctamente";
+                } else {
+                    echo "Error al insertar datos de documentación: ". mysqli_error($conexion);
+                }
+            }
+        } else {
+            echo "Error al insertar datos personales: ". mysqli_error($conexion);
+        }
+
+        mysqli_close($conexion);
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +97,7 @@
     <section class="zona1">
         <div class="form-container">
             <h1>Datos Personales</h1>
-            <form id="personalForm">
+            <form id="personalForm" action="formulario.php" method="post">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" required>
@@ -67,7 +141,7 @@
     <section class="zona2">
         <div id="extraFormChilena" class="form-container extra-form-container" style="display: none;">
             <h2>Documentación Chilena</h2>
-            <form>
+            <form action="formulario.php" method="post">
                 <div class="form-group">
                     <label for="documentoChilena">Documento</label>
                     <select id="documentoChilena" name="documento" required>
