@@ -122,6 +122,14 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="fechaEmisionVisa">Fecha de Emisión Visa</label>
+                        <input type="date" id="fechaEmisionVisa" name="fechaEmisionVisa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaExpiracionVisa">Fecha de Expiración Visa</label>
+                        <input type="date" id="fechaExpiracionVisa" name="fechaExpiracionVisa" required>
+                    </div>
+                    <div class="form-group">
                         <label for="nroID">Nro. ID</label>
                         <input type="text" id="nroID" name="nroID" required>
                     </div>
