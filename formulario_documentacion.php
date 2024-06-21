@@ -59,10 +59,16 @@
                     </div>
                     <div class="form-group">
                         <label for="tipoVisaChilena">Tipo de Visa</label>
-                        <select id="tipoVisaChilena" name="tipoVisa" required>
+                        <select id="tipoVisaChilena" name="tipoVisa" required onchange="toggleVisaWaiverFields()">
                             <option value="N/A">N/A</option>
                             <option value="visa_waiver">Visa Waiver</option>
                         </select>
+                    </div>
+                    <div class="form-group" id="visaWaiverFields" style="display: none;">
+                        <label for="fechaEmisionVW">Fecha de Emisión Visa Waiver</label>
+                        <input type="date" id="fechaEmisionVW" name="fechaEmisionVW">
+                        <label for="fechaExpiracionVW">Fecha de Expiración Visa Waiver</label>
+                        <input type="date" id="fechaExpiracionVW" name="fechaExpiracionVW">
                     </div>
                     <div class="form-group">
                         <label for="nroIDChilena">Nro. ID</label>
@@ -133,6 +139,16 @@
         <?php endif; ?>
     </section>
     <script type="text/javascript">
+        function toggleVisaWaiverFields() {
+            var tipoVisa = document.getElementById('tipoVisaChilena').value;
+            var visaWaiverFields = document.getElementById('visaWaiverFields');
+            if (tipoVisa === 'visa_waiver') {
+                visaWaiverFields.style.display = 'block';
+            } else {
+                visaWaiverFields.style.display = 'none';
+            }
+        }
+
         window.addEventListener("scroll", function(){
             var header = document.querySelector("header");
             header.classList.toggle("abajo", window.scrollY > 0);

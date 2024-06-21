@@ -20,6 +20,10 @@ $nroID = $_POST['nroID'];
 $nroDocumento = $_POST['nroDocumento'];
 $consejosViaje = isset($_POST['consejosViaje']) ? 1 : 0;
 
+// Datos de Visa Waiver
+$fechaEmisionVW = isset($_POST['fechaEmisionVW']) ? $_POST['fechaEmisionVW'] : null;
+$fechaExpiracionVW = isset($_POST['fechaExpiracionVW']) ? $_POST['fechaExpiracionVW'] : null;
+
 // Insertar en datos_personales
 $stmt = $conexion->prepare("INSERT INTO datos_personales (nombre, apellido, edad, email, sexo, fecha_nacimiento, nacionalidad) VALUES (?, ?, ?, ?, ?, ?, ?)");
 $stmt->bind_param("ssissss", $nombre, $apellido, $edad, $email, $sexo, $fechaNacimiento, $nacionalidad);
@@ -29,9 +33,9 @@ if ($stmt->execute()) {
     $datosPersonalesId = $stmt->insert_id;
 
     // Insertar en documentacion
-    $stmt = $conexion->prepare("INSERT INTO documentacion (datos_personales_id, tipo_documento, fecha_emision, fecha_expiracion, tipo_visa, nro_id, nro_documento, consejos_viaje)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssssss", $datosPersonalesId, $documento, $fechaEmision, $fechaExpiracion, $tipoVisa, $nroID, $nroDocumento, $consejosViaje);
+    $stmt = $conexion->prepare("INSERT INTO documentacion (datos_personales_id, tipo_documento, fecha_emision, fecha_expiracion, tipo_visa, nro_id, nro_documento, consejos_viaje, fecha_emision_vw, fecha_expiracion_vw)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssss", $datosPersonalesId, $documento, $fechaEmision, $fechaExpiracion, $tipoVisa, $nroID, $nroDocumento, $consejosViaje, $fechaEmisionVW, $fechaExpiracionVW);
 
     if ($stmt->execute()) {
         echo "Datos guardados exitosamente.";
@@ -45,3 +49,4 @@ if ($stmt->execute()) {
 $stmt->close();
 $conexion->close();
 ?>
+
