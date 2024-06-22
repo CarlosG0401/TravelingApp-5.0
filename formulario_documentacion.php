@@ -88,7 +88,7 @@
         <?php elseif ($_SESSION['nacionalidad'] == 'extranjera'): ?>
             <div class="form-container">
                 <h2>Documentación Extranjera</h2>
-                <form action="guardar_datos.php" method="post">
+                <form action="guardar_datos_extranjero.php" method="post">
                     <div class="form-group">
                         <label for="extraNacionalidad">Nacionalidad</label>
                         <select id="extraNacionalidad" name="extraNacionalidad">

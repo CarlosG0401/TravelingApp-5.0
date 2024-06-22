@@ -2,7 +2,7 @@
 session_start();
 require 'php/conexion_be.php'; // Incluimos la conexión a la base de datos
 
-function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa, $fechaExpiracionVW) {
+function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa) {
     $errores = [];
     $fechaActual = date("Y-m-d");
 
@@ -17,11 +17,6 @@ function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipo
     }
     if (strlen($nroDocumento) != 9) {
         $errores[] = "El Nro. de Documento debe tener al menos 9 caracteres.";
-    }
-
-    // Validar visa waiver para chilenos
-    if ($tipoVisa == 'visa_waiver' && $fechaExpiracionVW < $fechaActual) {
-        $errores[] = "La Visa Waiver está expirada.";
     }
 
     // Validar otras visas para extranjeros
@@ -42,6 +37,7 @@ $fechaNacimiento = $_SESSION['fechaNacimiento'];
 $nacionalidad = $_SESSION['nacionalidad'];
 
 // Datos de documentación
+$extraNacionalidad = $_POST['extraNacionalidad'];
 $documento = $_POST['documento'];
 $fechaEmision = $_POST['fechaEmision'];
 $fechaExpiracion = $_POST['fechaExpiracion'];
@@ -53,11 +49,7 @@ $consejosViaje = isset($_POST['consejosViaje']) ? 1 : 0;
 $fechaEmisionVisa = isset($_POST['fechaEmisionVisa']) ? $_POST['fechaEmisionVisa'] : null;
 $fechaExpiracionVisa = isset($_POST['fechaExpiracionVisa']) ? $_POST['fechaExpiracionVisa'] : null;
 
-// Datos de Visa Waiver
-$fechaEmisionVW = isset($_POST['fechaEmisionVW']) ? $_POST['fechaEmisionVW'] : null;
-$fechaExpiracionVW = isset($_POST['fechaExpiracionVW']) ? $_POST['fechaExpiracionVW'] : null;
-
-$errores = validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa, $fechaExpiracionVW);
+$errores = validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa);
 
 if (empty($errores)) {
     // Insertar en datos_personales
@@ -69,12 +61,37 @@ if (empty($errores)) {
         $datosPersonalesId = $stmt->insert_id;
 
         // Insertar en documentacion
-        $stmt = $conexion->prepare("INSERT INTO documentacion (datos_personales_id, tipo_documento, fecha_emision, fecha_expiracion, tipo_visa, nro_id, nro_documento, consejos_viaje, fecha_emision_vw, fecha_expiracion_vw, fecha_emision_visa, fecha_expiracion_visa)
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssssssssss", $datosPersonalesId, $documento, $fechaEmision, $fechaExpiracion, $tipoVisa, $nroID, $nroDocumento, $consejosViaje, $fechaEmisionVW, $fechaExpiracionVW, $fechaEmisionVisa, $fechaExpiracionVisa);
+        $stmt = $conexion->prepare("INSERT INTO documentacion (datos_personales_id, tipo_documento, fecha_emision, fecha_expiracion, tipo_visa, nro_id, nro_documento, consejos_viaje, fecha_emision_visa, fecha_expiracion_visa)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssssssss", $datosPersonalesId, $documento, $fechaEmision, $fechaExpiracion, $tipoVisa, $nroID, $nroDocumento, $consejosViaje, $fechaEmisionVisa, $fechaExpiracionVisa);
 
         if ($stmt->execute()) {
             echo "Datos guardados exitosamente.";
+
+            // Mostrar recomendaciones específicas para cada país
+            if ($extraNacionalidad == 'venezuela') {
+                echo "<p>Recomendaciones para ciudadanos venezolanos:</p>";
+                echo "<ul>";
+                echo "<li>Para renovar el RUT venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-venezolano' target='_blank'>Renovar RUT venezolano</a></li>";
+                echo "<li>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-venezolano' target='_blank'>Renovar pasaporte venezolano</a></li>";
+                echo "<li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>";
+                echo "</ul>";
+            } elseif ($extraNacionalidad == 'colombia') {
+                echo "<p>Recomendaciones para ciudadanos colombianos:</p>";
+                echo "<ul>";
+                echo "<li>Para renovar el RUT colombiano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-colombiano' target='_blank'>Renovar RUT colombiano</a></li>";
+                echo "<li>Para renovar el pasaporte colombiano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-colombiano' target='_blank'>Renovar pasaporte colombiano</a></li>";
+                echo "<li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>";
+                echo "</ul>";
+            } elseif ($extraNacionalidad == 'paraguay') {
+                echo "<p>Recomendaciones para ciudadanos paraguayos:</p>";
+                echo "<ul>";
+                echo "<li>Para renovar el RUT paraguayo, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-paraguayo' target='_blank'>Renovar RUT paraguayo</a></li>";
+                echo "<li>Para renovar el pasaporte paraguayo, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-paraguayo' target='_blank'>Renovar pasaporte paraguayo</a></li>";
+                echo "<li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>";
+                echo "</ul>";
+            }
+
         } else {
             echo "Error al guardar la documentación: " . $stmt->error;
         }
@@ -116,25 +133,16 @@ if (empty($errores)) {
                     <li><?php echo $error; ?></li>
                 <?php endforeach; ?>
             </ul>
-            <div class="recomendaciones">
-                <h3>Recomendaciones</h3>
-                <ul>
-                    <li>Para renovar el RUT chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2937-renovacion-de-cedula-de-identidad-para-chilenos" target="_blank">Renovar RUT chileno</a></li>
-                    <li>Para renovar el pasaporte chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2912-renovacion-de-pasaporte" target="_blank">Renovar pasaporte chileno</a></li>
-                    <li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>
-                </ul>
-            </div>
-            <button onclick="window.location.href='formulario_documentacion.php'" class="btn-azul">Volver</button>
         </div>
     </section>
     <style>
         .error-container {
             background-color: #ffffff;
-            padding: 40px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin: 50px auto;
-            max-width: 800px;
+            max-width: 500px;
             text-align: center;
         }
         .error-container h2 {
@@ -150,7 +158,7 @@ if (empty($errores)) {
         .btn-azul {
             background-color: #007bff;
             color: #ffffff;
-            padding: 20px 70px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -190,3 +198,4 @@ if (empty($errores)) {
 <?php
 }
 ?>
+
