@@ -67,6 +67,8 @@ if (empty($errores)) {
 
         if ($stmt->execute()) {
             echo "Datos guardados exitosamente.";
+            header("Location: pago.php");
+            exit();
 
             // Mostrar recomendaciones específicas para cada país
             if ($extraNacionalidad == 'venezuela') {

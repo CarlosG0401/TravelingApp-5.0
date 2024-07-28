@@ -74,7 +74,8 @@ if (empty($errores)) {
         $stmt->bind_param("isssssssssss", $datosPersonalesId, $documento, $fechaEmision, $fechaExpiracion, $tipoVisa, $nroID, $nroDocumento, $consejosViaje, $fechaEmisionVW, $fechaExpiracionVW, $fechaEmisionVisa, $fechaExpiracionVisa);
 
         if ($stmt->execute()) {
-            echo "Datos guardados exitosamente.";
+            header("Location: pago.php");
+            exit();
         } else {
             echo "Error al guardar la documentación: " . $stmt->error;
         }
