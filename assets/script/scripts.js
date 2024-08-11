@@ -19,3 +19,8 @@ btnPopup.addEventListener('click', ()=> {
 iconClose.addEventListener('click', ()=> {
     wrapper.classList.remove('active-popup');
 });
+
+function showLoginPopup() {
+    wrapper.classList.add('active-popup');
+    alert('Por favor, inicie sesión para continuar.');
+}

@@ -1,4 +1,16 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    // Si no está logueado, redirige a una página con un mensaje o un pop-up
+    echo "<script>
+        alert('Por favor, inicie sesión para continuar.');
+        window.location.href='index.php';
+    </script>";
+    exit;
+}
+
 include 'php/conexion_be.php';
 
 $id = isset($_GET['id']) ? $_GET['id'] : '';
