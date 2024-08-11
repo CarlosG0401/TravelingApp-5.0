@@ -2,7 +2,7 @@
 session_start();
 require 'php/conexion_be.php'; // Incluimos la conexión a la base de datos
 
-function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa, $fechaExpiracionVW) {
+function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa, $fechaExpiracionVW, $destino, $nacionalidad, $fechaEmisionVW) {
     $errores = [];
     $fechaActual = date("Y-m-d");
 
@@ -29,6 +29,14 @@ function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipo
         $errores[] = "La Visa $tipoVisa está expirada.";
     }
 
+    // Validación específica para destino Nueva York
+    if ($destino == 'New York' && $nacionalidad == 'chilena') {
+        // Si no se ingresó visa waiver y es necesario
+        if ($tipoVisa != 'visa_waiver' || !$fechaEmisionVW || !$fechaExpiracionVW || $fechaExpiracionVW < $fechaActual) {
+            $errores[] = "Para viajar a New York, los ciudadanos chilenos deben tener una Visa Waiver válida. Por favor, obtenga o renueve su Visa Waiver. <a href='https://esta.cbp.dhs.gov/' target='_blank'>Obtener o renovar Visa Waiver</a>";
+        }
+    }
+
     return $errores;
 }
 
@@ -49,6 +57,7 @@ $tipoVisa = $_POST['tipoVisa'];
 $nroID = $_POST['nroID'];
 $nroDocumento = $_POST['nroDocumento'];
 $consejosViaje = isset($_POST['consejosViaje']) ? 1 : 0;
+$destino = $_SESSION['destino'];
 
 $fechaEmisionVisa = isset($_POST['fechaEmisionVisa']) ? $_POST['fechaEmisionVisa'] : null;
 $fechaExpiracionVisa = isset($_POST['fechaExpiracionVisa']) ? $_POST['fechaExpiracionVisa'] : null;
@@ -57,7 +66,20 @@ $fechaExpiracionVisa = isset($_POST['fechaExpiracionVisa']) ? $_POST['fechaExpir
 $fechaEmisionVW = isset($_POST['fechaEmisionVW']) ? $_POST['fechaEmisionVW'] : null;
 $fechaExpiracionVW = isset($_POST['fechaExpiracionVW']) ? $_POST['fechaExpiracionVW'] : null;
 
-$errores = validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa, $fechaExpiracionVW);
+// Obtener el destino del viaje
+$sql = "SELECT v.destino 
+        FROM viajes v
+        JOIN documentacion d ON v.id = d.datos_personales_id
+        JOIN datos_personales dp ON dp.id = d.datos_personales_id
+        WHERE dp.nombre = ? AND dp.apellido = ? AND dp.email = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("sss", $nombre, $apellido, $email);
+$stmt->execute();
+$stmt->bind_result($destinoDb);
+$stmt->fetch();
+$stmt->close();
+
+$errores = validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipoVisa, $fechaExpiracionVisa, $fechaExpiracionVW, $destinoDb, $nacionalidad, $fechaEmisionVW);
 
 if (empty($errores)) {
     // Insertar en datos_personales
