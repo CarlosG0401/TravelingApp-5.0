@@ -3,12 +3,13 @@ include 'php/conexion_be.php';
 
 $id = $_GET['id'];
 
-// Consulta para obtener las aerolíneas disponibles
+// Consulta para obtener las aerolíneas disponibles sin duplicados
 $query = "
-    SELECT a.tipo_vuelo, a.nombre AS Aerolinea, a.hora_salida, a.hora_llegada, p.precio_ida, p.precio_ida_vuelta, a.id AS aerolinea_id
+    SELECT a.tipo_vuelo, a.nombre AS Aerolinea, a.hora_salida, a.hora_llegada, a.id AS aerolinea_id
     FROM aerolineas a
     LEFT JOIN precios p ON a.id = p.aerolinea_id
     WHERE a.viaje_id = $id
+    GROUP BY a.tipo_vuelo, a.nombre, a.hora_salida, a.hora_llegada
 ";
 $result = mysqli_query($conexion, $query);
 
@@ -74,3 +75,4 @@ if (!$result) {
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+
