@@ -42,8 +42,8 @@
         <form class="search-form" action="buscar_viajes.php" method="post">
             <input type="text" name="origen" placeholder="Lugar de Origen" class="search-input" required>
             <input type="text" name="destino" placeholder="Lugar de Destino" class="search-input" required>
-            <input type="date" name="fecha" class="search-input" required>
-            <input type="number" name="dias" placeholder="Cantidad de Días" class="search-input" required>
+            <input type="date" name="fecha_inicio" class="search-input" required>
+            <input type="date" name="fecha_fin" class="search-input" required>
             <button type="submit" class="search-btn">Buscar</button>
         </form>
     </div>

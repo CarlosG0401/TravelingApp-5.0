@@ -4,22 +4,25 @@ include 'php/conexion_be.php';
 // Inicializar variables
 $origen = isset($_POST['origen']) ? $_POST['origen'] : '';
 $destino = isset($_POST['destino']) ? $_POST['destino'] : '';
-$fecha = isset($_POST['fecha']) ? $_POST['fecha'] : '';
-$dias = isset($_POST['dias']) ? $_POST['dias'] : '';
+$fecha_inicio = isset($_POST['fecha_inicio']) ? $_POST['fecha_inicio'] : '';
+$fecha_fin = isset($_POST['fecha_fin']) ? $_POST['fecha_fin'] : '';
 
 // Verificar que todos los campos están completos
-if (empty($origen) || empty($destino) || empty($fecha) || empty($dias)) {
+if (empty($origen) || empty($destino) || empty($fecha_inicio) || empty($fecha_fin)) {
     echo "Todos los campos son requeridos.";
     exit;
 }
 
-// Consulta para obtener los viajes disponibles
+// Consulta para obtener los viajes disponibles en el rango de fechas
 $query = "
-    SELECT v.*, a.id AS aerolinea_id
+    SELECT DISTINCT v.id, v.origen, v.destino, v.fecha, v.dias
     FROM viajes v
-    JOIN aerolineas a ON v.id = a.viaje_id
-    WHERE v.origen = '$origen' AND v.destino = '$destino' AND v.fecha = '$fecha' AND v.dias >= $dias
+    WHERE v.origen = '$origen' 
+      AND v.destino = '$destino' 
+      AND v.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'
 ";
+
+// Ejecutar la consulta
 $result = mysqli_query($conexion, $query);
 
 if (!$result) {
@@ -59,7 +62,7 @@ if (!$result) {
                 echo "<td>" . $row['origen'] . "</td>";
                 echo "<td>" . $row['destino'] . "</td>";
                 echo "<td>" . $row['fecha'] . "</td>";
-                echo "<td><a href='reservar.php?id=" . $row['id'] . "&dias=" . $dias . "' class='btn'>Opciones</a></td>";
+                echo "<td><a href='reservar.php?id=" . $row['id'] . "&dias=" . $row['dias'] . "' class='btn'>Opciones</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -70,7 +73,6 @@ if (!$result) {
         mysqli_close($conexion);
         ?>
     </div>
-
 
     <script src="assets/script/scripts.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
