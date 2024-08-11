@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    // Si no está logueado, redirige a una página con un mensaje o un pop-up
+    echo "<script>
+        alert('Por favor, inicie sesión para continuar.');
+        window.location.href='index.php';
+    </script>";
+    exit;
+}
+
 include 'php/conexion_be.php';
 
 $precio_ida = isset($_GET['precio_ida']) ? $_GET['precio_ida'] : '';
@@ -49,7 +60,16 @@ if (!$result_detalle) {
             <a href="#">Service</a>
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
-            <button class="btnLogin-popup">Login</button>
+            <?php
+            if (isset($_SESSION['user'])) {
+                // Mostrar el nombre de usuario y la opción de cerrar sesión si el usuario está autenticado
+                echo '<span class="header-user" style="color: white;">Bienvenido, ' . $_SESSION['user'] . '</span>';
+                echo '<a href="php/cerrar_session.php">Cerrar sesión</a>';
+            } else {
+                // Mostrar el botón de Login si no hay sesión iniciada
+                echo '<button class="btnLogin-popup">Login</button>';
+            }
+            ?>
         </nav>
     </header>
 
@@ -87,6 +107,7 @@ if (!$result_detalle) {
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+
 
 
 

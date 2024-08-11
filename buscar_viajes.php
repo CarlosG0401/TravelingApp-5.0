@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'php/conexion_be.php';
 
 // Inicializar variables
@@ -47,7 +48,16 @@ if (!$result) {
             <a href="#">Service</a>
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
-            <button class="btnLogin-popup">Login</button>
+            <?php
+            if (isset($_SESSION['user'])) {
+                // Mostrar el nombre de usuario y la opción de cerrar sesión si el usuario está autenticado
+                echo '<span class="header-user" style="color: white;">Bienvenido, ' . $_SESSION['user'] . '</span>';
+                echo '<a href="php/cerrar_session.php">Cerrar sesión</a>';
+            } else {
+                // Mostrar el botón de Login si no hay sesión iniciada
+                echo '<button class="btnLogin-popup">Login</button>';
+            }
+            ?>
         </nav>
     </header>
 
@@ -79,3 +89,4 @@ if (!$result) {
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+

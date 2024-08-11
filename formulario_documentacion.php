@@ -1,7 +1,7 @@
 <?php
-    // Recibimos los datos personales
+    session_start();
+    // Recibimos los datos personales si es una petición POST
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        session_start();
         $_SESSION['nombre'] = $_POST['nombre'];
         $_SESSION['apellido'] = $_POST['apellido'];
         $_SESSION['edad'] = $_POST['edad'];
@@ -14,6 +14,18 @@
         header("Location: formulario.php");
         exit();
     }
+
+    if (!isset($_SESSION['user'])) {
+        echo '
+            <script>
+                alert("Por favor, debes iniciar sesión.");
+                window.location = "index.php";
+            </script>
+        ';
+        session_destroy();
+        die();
+    }
+    include 'php/conexion_be.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +45,13 @@
             <a href="#">Service</a>
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
-            <button class="btnLogin-popup">Login</button>
+            <?php
+            if(isset($_SESSION['user'])) {
+                // Muestra el nombre de usuario y la opción de cerrar sesión si está iniciada
+                echo '<span class="header-user" style="color: white;">Bienvenido, ' . $_SESSION['user'] . '</span>';
+                echo '<a href="php/cerrar_session.php">Cerrar sesión</a>';
+            }
+            ?>
         </nav>
     </header>
 

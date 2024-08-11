@@ -128,7 +128,15 @@ if (empty($errores)) {
             <a href="#">Service</a>
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
-            <button class="btnLogin-popup">Login</button>
+            <?php
+            if (isset($_SESSION['user'])) {
+                // Muestra el nombre de usuario y la opción de cerrar sesión si está iniciada
+                echo '<span class="header-user" style="color: white;">Bienvenido, ' . $_SESSION['user'] . '</span>';
+                echo '<a href="php/cerrar_session.php">Cerrar sesión</a>';
+            } else {
+                echo '<button class="btnLogin-popup">Login</button>';
+            }
+            ?>
         </nav>
     </header>
     <section class="zona2">
