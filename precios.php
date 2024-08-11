@@ -42,11 +42,12 @@ if (!$result) {
         <?php
         if (mysqli_num_rows($result) > 0) {
             echo "<table class='results-table'>";
-            echo "<tr><th>Precio Ida</th><th>Precio Ida y Vuelta</th><th>Operación</th></tr>";
+            echo "<tr><th>Precio Ida</th><th>Precio Ida y Vuelta</th><th>Detalles</th><th>Operación</th></tr>";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
                 echo "<td>$" . $row['precio_ida'] . "</td>";
                 echo "<td>$" . $row['precio_ida_vuelta'] . "</td>";
+                echo "<td><a href='detalles_precio.php?precio_ida=" . $row['precio_ida'] . "&precio_ida_vuelta=" . $row['precio_ida_vuelta'] . "' class='btn'>Ver Detalles</a></td>";
                 echo "<td><a href='formulario.php?precio_ida=" . $row['precio_ida'] . "&precio_ida_vuelta=" . $row['precio_ida_vuelta'] . "' class='btn'>Rellenar</a></td>";
                 echo "</tr>";
             }
