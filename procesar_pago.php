@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'php/conexion_be.php';
+require('fpdf/fpdf.php'); // Asegúrate de que la ruta sea correcta
 
 // Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION['user'])) {
@@ -32,7 +33,7 @@ if (empty($nombre_titular) || empty($numero_tarjeta) || empty($fecha_expiracion)
 
 // Obtén el ID del usuario desde la sesión
 $email = $_SESSION['user'];
-$query_user = "SELECT id FROM users WHERE username='$email'";
+$query_user = "SELECT id FROM users WHERE username='$email'"; // Cambiado a email
 $result_user = mysqli_query($conexion, $query_user);
 
 if (!$result_user) {
@@ -65,9 +66,35 @@ $query_pago = "INSERT INTO pagos(nombre_titular, numero_tarjeta, fecha_expiracio
 $ejecutar = mysqli_query($conexion, $query_pago);
 
 if ($ejecutar) {
+    // Crear el PDF con los detalles del pago y vuelo
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(40, 10, 'Boleta de Pago');
+    $pdf->Ln(10);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(40, 10, 'Nombre del Titular: ' . $nombre_titular);
+    $pdf->Ln(10);
+    $pdf->Cell(40, 10, 'Numero de Tarjeta: ' . $numero_tarjeta);
+    $pdf->Ln(10);
+    $pdf->Cell(40, 10, 'Fecha de Expiracion: ' . $fecha_expiracion);
+    $pdf->Ln(10);
+    $pdf->Cell(40, 10, 'CVV: ' . $cvv);
+    $pdf->Ln(20);
+    $pdf->Cell(40, 10, 'Detalles del Vuelo');
+    // Puedes añadir más detalles del vuelo aquí, como origen, destino, fecha de vuelo, etc.
+    // Por ejemplo:
+    $pdf->Ln(10);
+    $pdf->Cell(40, 10, 'Destino: Santiago - New York');
+    $pdf->Ln(10);
+    $pdf->Cell(40, 10, 'Fecha de Salida: 2024-08-25');
+    
+    // Salida del PDF
+    $pdf->Output('D', 'boleta_pago.pdf'); // 'D' para descargar directamente
+
     echo '
         <script>
-            alert("Pago realizado con éxito.");
+            alert("Pago realizado con éxito. Boleta de pago generada.");
             window.location = "index.php";
         </script>
     ';
@@ -82,3 +109,4 @@ if ($ejecutar) {
 
 mysqli_close($conexion);
 ?>
+
