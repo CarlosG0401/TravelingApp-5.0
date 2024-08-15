@@ -175,9 +175,48 @@ if ($ejecutar) {
     // Agrega el texto y enlace en la posición deseada
     $pdf->Cell(0, 10, 'Ubicacion del Aeropuerto en Google Maps:', 0, 1); // Agrega el texto
     $pdf->Cell(0, 10, 'Haz clic aqui para ver la ubicacion', 0, 1, 'L', false, 'https://maps.app.goo.gl/szv2ZYWXSkoEHJjd9'); // Enlace a Google Maps
+    $pdf->Image('assets/images/image.png', 10, $pdf->GetY(), 180);
 
     // Restablecer color del texto
     $pdf->SetTextColor(0, 0, 0);
+
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(0, 10, 'Informacion Adicional sobre Nueva York', 0, 1, 'C');
+    $pdf->Ln(10);
+
+
+    // Información de la tabla
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(90, 10, 'Casa de cambio mas cercana', 1);
+    $pdf->Cell(90, 10, 'Change Exchange', 1, 1); // Nombre de la casa de cambio
+
+    $pdf->Cell(90, 10, 'Distancia al aeropuerto', 1);
+    $pdf->Cell(90, 10, '500 m', 1, 1); // Distancia estimada
+    $pdf->Ln(10);
+
+    $pdf->Cell(60, 10, 'Hoteles mas cercanos', 1);
+    $pdf->Cell(40, 10, 'Ubicacion', 1);
+    $pdf->Cell(40, 10, 'Precio por noche', 1);
+    $pdf->Cell(30, 10, 'Camas', 1, 1);
+
+    $pdf->Cell(60, 10, 'Hotel Central', 1);
+    $pdf->Cell(40, 10, 'Standard Location', 1);
+    $pdf->Cell(40, 10, '$150', 1);
+    $pdf->Cell(30, 10, '2', 1, 1);
+
+    $pdf->Cell(60, 10, 'Hotel Plaza', 1);
+    $pdf->Cell(40, 10, 'Standard Location', 1);
+    $pdf->Cell(40, 10, '$200', 1);
+    $pdf->Cell(30, 10, '3', 1, 1);
+    $pdf->Ln(10);
+
+    $pdf->Cell(90, 10, 'Precio estimado en metro', 1);
+    $pdf->Cell(90, 10, '$2.75', 1, 1); // Precio estimado del trayecto en metro
+    $pdf->Ln(10);
+
+    $pdf->Cell(90, 10, 'Precio estimado en taxi', 1);
+    $pdf->Cell(90, 10, '$50', 1, 1); // Precio estimado del trayecto en taxi
     // Limpiar el buffer de salida antes de generar el PDF
     ob_end_clean();
 
