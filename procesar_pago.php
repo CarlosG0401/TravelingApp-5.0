@@ -3,6 +3,9 @@ session_start();
 include 'php/conexion_be.php';
 require('fpdf/fpdf.php'); // Asegúrate de que la ruta sea correcta
 
+// Captura la salida para evitar problemas con FPDF
+ob_start();
+
 // Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION['user'])) {
     echo '
@@ -66,47 +69,95 @@ $query_pago = "INSERT INTO pagos(nombre_titular, numero_tarjeta, fecha_expiracio
 $ejecutar = mysqli_query($conexion, $query_pago);
 
 if ($ejecutar) {
+
+    // Obtener datos del vuelo y de precios relacionados con el usuario
+    $query_vuelo = "
+        SELECT a.nombre AS aerolinea, v.origen, v.destino, v.fecha AS fecha_salida, p.precio_ida AS precio
+        FROM aerolineas a
+        INNER JOIN viajes v ON a.viaje_id = v.id
+        INNER JOIN precios p ON a.id = p.aerolinea_id
+        WHERE a.id = 1"; // Cambia por la lógica para obtener el vuelo seleccionado
+
+    $result_vuelo = mysqli_query($conexion, $query_vuelo);
+    $vuelo = mysqli_fetch_assoc($result_vuelo);
+
+    if (!$vuelo) {
+        echo '
+            <script>
+                alert("No se encontraron detalles del vuelo.");
+                window.location = "pago.php";
+            </script>
+        ';
+        die();
+    }
+
+    // Calcular el precio con IVA (supongamos que el IVA es del 19%)
+    $precio_base = $vuelo['precio']; // Precio base del vuelo
+    $iva = $precio_base * 0.19; // Calcula el IVA
+    $total = $precio_base + $iva; // Precio total con IVA
+
     // Crear el PDF con los detalles del pago y vuelo
     $pdf = new FPDF();
     $pdf->AddPage();
+    // Agregar logo
+    $pdf->Image('assets/images/imagen-foto-removebg-preview.png', 10, 10, 30); // Ajusta la ruta y el tamaño del logo
     $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(40, 10, 'Boleta de Pago');
-    $pdf->Ln(10);
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell(40, 10, 'Nombre del Titular: ' . $nombre_titular);
-    $pdf->Ln(10);
-    $pdf->Cell(40, 10, 'Numero de Tarjeta: ' . $numero_tarjeta);
-    $pdf->Ln(10);
-    $pdf->Cell(40, 10, 'Fecha de Expiracion: ' . $fecha_expiracion);
-    $pdf->Ln(10);
-    $pdf->Cell(40, 10, 'CVV: ' . $cvv);
+    $pdf->Cell(0, 10, 'Factura de Pago', 0, 1, 'C');
     $pdf->Ln(20);
-    $pdf->Cell(40, 10, 'Detalles del Vuelo');
-    // Puedes añadir más detalles del vuelo aquí, como origen, destino, fecha de vuelo, etc.
-    // Por ejemplo:
-    $pdf->Ln(10);
-    $pdf->Cell(40, 10, 'Destino: Santiago - New York');
-    $pdf->Ln(10);
-    $pdf->Cell(40, 10, 'Fecha de Salida: 2024-08-25');
-    
-    // Salida del PDF
-    $pdf->Output('D', 'boleta_pago.pdf'); // 'D' para descargar directamente
 
-    echo '
-        <script>
-            alert("Pago realizado con éxito. Boleta de pago generada.");
-            window.location = "index.php";
-        </script>
-    ';
+    // Información de la empresa
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(100, 10, 'TravelingWeb', 0, 0);
+    $pdf->Cell(0, 10, 'Fecha: ' . date('d/m/Y'), 0, 1, 'R');
+    $pdf->Cell(100, 10, 'Direccion: Av. Valle Del Norte 123, Huechuraba, Santiago, Chile', 0, 0);
+    $pdf->Cell(0, 10, 'Numero de Factura: 0001', 0, 1, 'R');
+    $pdf->Ln(10);
+
+    // Detalles del cliente
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, 'Detalles del Cliente', 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(0, 10, 'Nombre: ' . $nombre_titular, 0, 1);
+    $pdf->Ln(10);
+
+    // Detalles del vuelo
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, 'Detalles del Vuelo', 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(40, 10, 'Origen:', 1);
+    $pdf->Cell(0, 10, $vuelo['origen'], 1, 1);
+    $pdf->Cell(40, 10, 'Destino:', 1);
+    $pdf->Cell(0, 10, $vuelo['destino'], 1, 1);
+    $pdf->Cell(40, 10, 'Fecha de Salida:', 1);
+    $pdf->Cell(0, 10, $vuelo['fecha_salida'], 1, 1);
+    $pdf->Cell(40, 10, 'Aerolinea:', 1);
+    $pdf->Cell(0, 10, $vuelo['aerolinea'], 1, 1);
+    $pdf->Ln(10);
+
+    // Precio
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, 'Detalles del Pago', 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(40, 10, 'Precio Base:', 1);
+    $pdf->Cell(0, 10, '$' . number_format($precio_base, 2), 1, 1);
+    $pdf->Cell(40, 10, 'IVA (19%):', 1);
+    $pdf->Cell(0, 10, '$' . number_format($iva, 2), 1, 1);
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(40, 10, 'Total:', 1);
+    $pdf->Cell(0, 10, '$' . number_format($total, 2), 1, 1);
+
+    // Limpiar el buffer de salida antes de generar el PDF
+    ob_end_clean();
+
+    // Descargar el PDF
+    $pdf->Output('D', 'boleta_pago.pdf');
+
 } else {
     echo '
         <script>
-            alert("Hubo un error al procesar el pago: ' . mysqli_error($conexion) . '");
+            alert("Error al procesar el pago.");
             window.location = "pago.php";
         </script>
     ';
 }
-
-mysqli_close($conexion);
 ?>
-
