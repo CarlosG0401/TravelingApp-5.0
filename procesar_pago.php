@@ -146,6 +146,38 @@ if ($ejecutar) {
     $pdf->Cell(40, 10, 'Total:', 1);
     $pdf->Cell(0, 10, '$' . number_format($total, 2), 1, 1);
 
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(0, 10, 'Informacion Sobre Nueva York', 0, 1, 'C');
+    $pdf->Ln(10);
+
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->MultiCell(0, 10, 'Nueva York, la ciudad que nunca duerme, es conocida por su vibrante vida cultural, sus iconicos rascacielos y sus famosos barrios. Desde la Estatua de la Libertad hasta Times Square, hay algo para todos en esta metropoli global.');
+    $pdf->Ln(10);
+
+    // Ajusta las coordenadas de las imágenes
+    $image1_x = 10; // Coordenada x para la primera imagen
+    $image1_y = $pdf->GetY(); // Coordenada y para la primera imagen, usa la posición actual de Y
+
+    $image2_x = 110; // Coordenada x para la segunda imagen
+    $image2_y = $image1_y; // Coordenada y para la segunda imagen, debe estar en la misma fila que la primera
+
+    $pdf->Image('assets/images/empire-state-mirador-161004120416001.jpeg', $image1_x, $image1_y, 90); // Ajusta la ruta y el tamaño
+    $pdf->Image('assets/images/new-york-city-555749235-59d5839a685fbe0011fda06b.jpg', $image2_x, $image2_y, 90); // Ajusta la ruta y el tamaño
+
+    // Establece la fuente para el enlace
+    $pdf->SetFont('Arial', 'I', 12);
+    $pdf->SetTextColor(0, 0, 255); // Color azul para el enlace
+
+    // Mueve la posición actual en la página
+    $pdf->Ln(70); // Espacio vertical desde la posición actual para asegurar que el enlace esté separado de las imágenes
+
+    // Agrega el texto y enlace en la posición deseada
+    $pdf->Cell(0, 10, 'Ubicacion del Aeropuerto en Google Maps:', 0, 1); // Agrega el texto
+    $pdf->Cell(0, 10, 'Haz clic aqui para ver la ubicacion', 0, 1, 'L', false, 'https://maps.app.goo.gl/szv2ZYWXSkoEHJjd9'); // Enlace a Google Maps
+
+    // Restablecer color del texto
+    $pdf->SetTextColor(0, 0, 0);
     // Limpiar el buffer de salida antes de generar el PDF
     ob_end_clean();
 
