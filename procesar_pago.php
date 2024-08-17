@@ -221,7 +221,14 @@ if ($ejecutar) {
     ob_end_clean();
 
     // Descargar el PDF
-    $pdf->Output('D', 'boleta_pago.pdf');
+    //$pdf->Output('D', 'boleta_pago.pdf');
+
+    $archivo_pdf = 'boleta_pago.pdf';
+    $pdf->Output('F', $archivo_pdf);
+
+    // Redirigir al usuario a enviar_pdf.php
+    header('Location: enviar_pdf.php');
+    exit();
 
 } else {
     echo '
