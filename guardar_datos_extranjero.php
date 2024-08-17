@@ -124,7 +124,13 @@ if (empty($errores)) {
             <a href="#">Service</a>
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
-            <button class="btnLogin-popup">Login</button>
+            <?php
+            if(isset($_SESSION['user'])) {
+                // Muestra el nombre de usuario y la opción de cerrar sesión si está iniciada
+                echo '<span class="header-user" style="color: white;">Bienvenido, ' . $_SESSION['user'] . '</span>';
+                echo '<a href="php/cerrar_session.php">Cerrar sesión</a>';
+            }
+            ?>
         </nav>
     </header>
     <section class="zona2">
@@ -135,6 +141,15 @@ if (empty($errores)) {
                     <li><?php echo $error; ?></li>
                 <?php endforeach; ?>
             </ul>
+            <div class="recomendaciones">
+                <h3>Recomendaciones</h3>
+                <ul>
+                    <li>Para renovar el RUT chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2937-renovacion-de-cedula-de-identidad-para-chilenos" target="_blank">Renovar RUT chileno</a></li>
+                    <li>Para renovar el pasaporte chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2912-renovacion-de-pasaporte" target="_blank">Renovar pasaporte chileno</a></li>
+                    <li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>
+                </ul>
+            </div>
+            <button onclick="window.location.href='formulario_documentacion.php'" class="btn-azul">Volver</button>
         </div>
     </section>
     <style>
