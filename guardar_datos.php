@@ -57,7 +57,7 @@ $tipoVisa = $_POST['tipoVisa'];
 $nroID = $_POST['nroID'];
 $nroDocumento = $_POST['nroDocumento'];
 $consejosViaje = isset($_POST['consejosViaje']) ? 1 : 0;
-$destino = $_SESSION['destino'];
+//$destino = $_SESSION['destino'];
 
 $fechaEmisionVisa = isset($_POST['fechaEmisionVisa']) ? $_POST['fechaEmisionVisa'] : null;
 $fechaExpiracionVisa = isset($_POST['fechaExpiracionVisa']) ? $_POST['fechaExpiracionVisa'] : null;

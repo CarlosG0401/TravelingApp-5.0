@@ -158,6 +158,11 @@ if (empty($errores)) {
                         echo "<li>Para renovar el pasaporte paraguayo, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-paraguayo' target='_blank'>Renovar pasaporte paraguayo</a></li>";
                     }
                     ?>
+                    <li>El destino seleccionado no permite el ingreso a ciudadanos con las siguientes visas y sin pasaporte vigente:
+                        <ul>
+                            <li>Definitiva, Democrática, Estudiante y Turista</li>
+                        </ul>
+                    </li>
                     <li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>
                 </ul>
             </div>
