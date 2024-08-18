@@ -34,6 +34,16 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Precios</title>
     <link rel="stylesheet" href="assets/styles/precios_styles.css">
+    <style>
+        .check-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .check-container input[type="checkbox"] {
+            margin: 0 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -63,13 +73,18 @@ if (!$result) {
         <?php
         if (mysqli_num_rows($result) > 0) {
             echo "<table class='results-table'>";
-            echo "<tr><th>Precio Ida</th><th>Precio Ida y Vuelta</th><th>Detalles</th><th>Operación</th></tr>";
+            echo "<tr><th>Precio Ida</th><th>Precio Ida y Vuelta</th><th>Detalles</th><th>Operación</th><th>Ida</th><th>Ida y Vuelta</th></tr>";
             while ($row = mysqli_fetch_assoc($result)) {
+                $precioIda = $row['precio_ida'];
+                $precioIdaVuelta = $row['precio_ida_vuelta'];
+                $id = uniqid(); // Genera un identificador único para cada fila
                 echo "<tr>";
-                echo "<td>$" . $row['precio_ida'] . "</td>";
-                echo "<td>$" . $row['precio_ida_vuelta'] . "</td>";
-                echo "<td><a href='detalles_precio.php?precio_ida=" . $row['precio_ida'] . "&precio_ida_vuelta=" . $row['precio_ida_vuelta'] . "' class='btn'>Ver Detalles</a></td>";
-                echo "<td><a href='formulario.php?precio_ida=" . $row['precio_ida'] . "&precio_ida_vuelta=" . $row['precio_ida_vuelta'] . "' class='btn'>Rellenar</a></td>";
+                echo "<td>$" . $precioIda . "</td>";
+                echo "<td>$" . $precioIdaVuelta . "</td>";
+                echo "<td><a href='detalles_precio.php?precio_ida=$precioIda&precio_ida_vuelta=$precioIdaVuelta' class='btn'>Ver Detalles</a></td>";
+                echo "<td><a href='formulario.php?precio_ida=$precioIda&precio_ida_vuelta=$precioIdaVuelta' class='btn'>Rellenar</a></td>";
+                echo "<td><div class='check-container'><input type='checkbox' id='ida_$id' name='check_$id' class='check-id' /></div></td>";
+                echo "<td><div class='check-container'><input type='checkbox' id='ida_vuelta_$id' name='check_$id' class='check-vuelta' /></div></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -81,9 +96,30 @@ if (!$result) {
         ?>
     </div>
 
+    <script>
+        // Función para desmarcar todas las casillas en todas las filas
+        function desmarcarTodasLasCasillas() {
+            document.querySelectorAll('.results-table input[type="checkbox"]').forEach(function(checkbox) {
+                checkbox.checked = false;
+            });
+        }
+
+        // Añadir el evento change a todas las casillas de verificación
+        document.querySelectorAll('.check-container input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    // Desmarcar todas las casillas en todas las filas
+                    desmarcarTodasLasCasillas();
+
+                    // Marcar solo la casilla seleccionada
+                    this.checked = true;
+                }
+            });
+        });
+    </script>
+
     <script src="assets/script/scripts.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
-
