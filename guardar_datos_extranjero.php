@@ -126,50 +126,52 @@ if (empty($errores)) {
             <a href="#">Contacto</a>
             <?php
             if(isset($_SESSION['user'])) {
-                // Muestra el nombre de usuario y la opción de cerrar sesión si está iniciada
                 echo '<span class="header-user" style="color: white;">Bienvenido, ' . $_SESSION['user'] . '</span>';
                 echo '<a href="php/cerrar_session.php">Cerrar sesión</a>';
+            } else {
+                echo '<button class="btnLogin-popup">Login</button>';
             }
             ?>
         </nav>
     </header>
     <section class="zona2">
-        <div class="form-container">
+        <div class="error-container">
             <h2>Errores en la Documentación</h2>
-            <?php if (!empty($errores)): ?>
+            <ul>
+                <?php foreach ($errores as $error): ?>
+                    <li><?php echo $error; ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="recomendaciones">
+                <h3>Recomendaciones</h3>
                 <ul>
-                    <?php foreach ($errores as $error): ?>
-                        <li><?php echo htmlspecialchars($error); ?></li>
-                    <?php endforeach; ?>
+                    <?php
+                    // Mostrar recomendaciones específicas para cada país
+                    if ($extra_nacionalidad == 'venezuela') {
+                        echo "<li>Para renovar el RUT venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-venezolano' target='_blank'>Renovar RUT venezolano</a></li>";
+                        echo "<li>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-venezolano' target='_blank'>Renovar pasaporte venezolano</a></li>";
+                    } elseif ($extra_nacionalidad == 'colombia') {
+                        echo "<li>Para renovar el RUT colombiano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-colombiano' target='_blank'>Renovar RUT colombiano</a></li>";
+                        echo "<li>Para renovar el pasaporte colombiano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-colombiano' target='_blank'>Renovar pasaporte colombiano</a></li>";
+                    } elseif ($extra_nacionalidad == 'paraguay') {
+                        echo "<li>Para renovar el RUT paraguayo, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-paraguayo' target='_blank'>Renovar RUT paraguayo</a></li>";
+                        echo "<li>Para renovar el pasaporte paraguayo, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-paraguayo' target='_blank'>Renovar pasaporte paraguayo</a></li>";
+                    }
+                    ?>
+                    <li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>
                 </ul>
-            <?php else: ?>
-                <p>No se encontraron errores.</p>
-            <?php endif; ?>
-
-            <h2>Recomendaciones</h2>
-            <?php if ($extra_nacionalidad == 'venezuela'): ?>
-                <p>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href="https://www.saime.gob.ve/">Renovar pasaporte venezolano</a></p>
-                <p>Para renovar el RUT para extranjeros, sigue los siguiente pasos: <a href="https://www.chileatiende.gob.cl/fichas/3337-cedula-de-identidad-para-extranjeros-obtencion-y-renovacion">Renovar RUT Extranjero</a></p>
-            <?php elseif ($extra_nacionalidad == 'colombia'): ?>
-                <p>Para renovar el pasaporte colombiano, sigue los siguientes pasos: <a href="https://www.cancilleria.gov.co/tramites_servicios/pasaportes">Renovar pasaporte colombiano</a></p>
-                <p>Para renovar el RUT para extranjeros, sigue los siguiente pasos: <a href="https://www.chileatiende.gob.cl/fichas/3337-cedula-de-identidad-para-extranjeros-obtencion-y-renovacion">Renovar RUT Extranjero</a></p>
-            <?php elseif ($extra_nacionalidad == 'paraguay'): ?>
-                <p>Para renovar el pasaporte paraguayo, sigue los siguientes pasos: <a href="https://tramitesparaguay.com/como-obtener-pasaporte-paraguayo/">Renovar pasaporte paraguayo</a></p>
-                <p>Para renovar el RUT para extranjeros, sigue los siguiente pasos: <a href="https://www.chileatiende.gob.cl/fichas/3337-cedula-de-identidad-para-extranjeros-obtencion-y-renovacion">Renovar RUT Extranjero</a></p>
-            <?php endif; ?>
-
-            <p>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</p>
-            <a href="formulario_documentacion.php">Volver</a>
+            </div>
+            <button onclick="window.location.href='formulario_documentacion.php'" class="btn-azul">Volver</button>
         </div>
     </section>
     <style>
         .error-container {
             background-color: #ffffff;
-            padding: 20px;
+            padding: 40px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin: 50px auto;
-            max-width: 500px;
+            max-width: 800px;
             text-align: center;
         }
         .error-container h2 {
@@ -185,7 +187,7 @@ if (empty($errores)) {
         .btn-azul {
             background-color: #007bff;
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 20px 70px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -206,15 +208,8 @@ if (empty($errores)) {
         .recomendaciones li {
             margin: 10px 0;
         }
-        .recomendaciones a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .recomendaciones a:hover {
-            text-decoration: underline;
-        }
     </style>
-     <script type="text/javascript">
+    <script type="text/javascript">
         window.addEventListener("scroll", function(){
             var header = document.querySelector("header");
             header.classList.toggle("abajo", window.scrollY > 0);
@@ -222,7 +217,7 @@ if (empty($errores)) {
     </script>
 </body>
 </html>
+
 <?php
 }
 ?>
-
