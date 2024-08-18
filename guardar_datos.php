@@ -36,7 +36,6 @@ function validarDatos($documento, $fechaExpiracion, $nroID, $nroDocumento, $tipo
             $errores[] = "Para viajar a New York, los ciudadanos chilenos deben tener una Visa Waiver válida. Por favor, obtenga o renueve su Visa Waiver. <a href='https://esta.cbp.dhs.gov/' target='_blank'>Obtener o renovar Visa Waiver</a>";
         }
     }
-
     return $errores;
 }
 
