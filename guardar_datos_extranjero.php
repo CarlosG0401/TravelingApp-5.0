@@ -37,7 +37,7 @@ $fechaNacimiento = $_SESSION['fechaNacimiento'];
 $nacionalidad = $_SESSION['nacionalidad'];
 
 // Datos de documentación
-$extraNacionalidad = $_POST['extraNacionalidad'];
+$extra_nacionalidad = $_POST['extraNacionalidad'];
 $documento = $_POST['documento'];
 $fechaEmision = $_POST['fechaEmision'];
 $fechaExpiracion = $_POST['fechaExpiracion'];
@@ -134,22 +134,32 @@ if (empty($errores)) {
         </nav>
     </header>
     <section class="zona2">
-        <div class="error-container">
+        <div class="form-container">
             <h2>Errores en la Documentación</h2>
-            <ul>
-                <?php foreach ($errores as $error): ?>
-                    <li><?php echo $error; ?></li>
-                <?php endforeach; ?>
-            </ul>
-            <div class="recomendaciones">
-                <h3>Recomendaciones</h3>
+            <?php if (!empty($errores)): ?>
                 <ul>
-                    <li>Para renovar el RUT chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2937-renovacion-de-cedula-de-identidad-para-chilenos" target="_blank">Renovar RUT chileno</a></li>
-                    <li>Para renovar el pasaporte chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2912-renovacion-de-pasaporte" target="_blank">Renovar pasaporte chileno</a></li>
-                    <li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>
+                    <?php foreach ($errores as $error): ?>
+                        <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
                 </ul>
-            </div>
-            <button onclick="window.location.href='formulario_documentacion.php'" class="btn-azul">Volver</button>
+            <?php else: ?>
+                <p>No se encontraron errores.</p>
+            <?php endif; ?>
+
+            <h2>Recomendaciones</h2>
+            <?php if ($extra_nacionalidad == 'venezuela'): ?>
+                <p>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href="https://www.saime.gob.ve/">Renovar pasaporte venezolano</a></p>
+                <p>Para renovar el RUT para extranjeros, sigue los siguiente pasos: <a href="https://www.chileatiende.gob.cl/fichas/3337-cedula-de-identidad-para-extranjeros-obtencion-y-renovacion">Renovar RUT Extranjero</a></p>
+            <?php elseif ($extra_nacionalidad == 'colombia'): ?>
+                <p>Para renovar el pasaporte colombiano, sigue los siguientes pasos: <a href="https://www.cancilleria.gov.co/tramites_servicios/pasaportes">Renovar pasaporte colombiano</a></p>
+                <p>Para renovar el RUT para extranjeros, sigue los siguiente pasos: <a href="https://www.chileatiende.gob.cl/fichas/3337-cedula-de-identidad-para-extranjeros-obtencion-y-renovacion">Renovar RUT Extranjero</a></p>
+            <?php elseif ($extra_nacionalidad == 'paraguay'): ?>
+                <p>Para renovar el pasaporte paraguayo, sigue los siguientes pasos: <a href="https://tramitesparaguay.com/como-obtener-pasaporte-paraguayo/">Renovar pasaporte paraguayo</a></p>
+                <p>Para renovar el RUT para extranjeros, sigue los siguiente pasos: <a href="https://www.chileatiende.gob.cl/fichas/3337-cedula-de-identidad-para-extranjeros-obtencion-y-renovacion">Renovar RUT Extranjero</a></p>
+            <?php endif; ?>
+
+            <p>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</p>
+            <a href="formulario_documentacion.php">Volver</a>
         </div>
     </section>
     <style>
