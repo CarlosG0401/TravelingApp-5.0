@@ -149,7 +149,7 @@ if (empty($errores)) {
             <div class="recomendaciones">
                 <h3>Recomendaciones</h3>
                 <ul>
-                    <li>Para renovar el RUT chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2937-renovacion-de-cedula-de-identidad-para-chilenos" target="_blank">Renovar RUT chileno</a></li>
+                    <li>Para renovar el RUT chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/3430-cedula-de-identidad-obtencion-y-renovacion" target="_blank">Renovar RUT chileno</a></li>
                     <li>Para renovar el pasaporte chileno, sigue los siguientes pasos: <a href="https://www.chileatiende.gob.cl/fichas/2912-renovacion-de-pasaporte" target="_blank">Renovar pasaporte chileno</a></li>
                     <li>En caso de no tener Visa Waiver o de tenerla vencida, sigue los siguientes pasos: <a href="https://cl.usembassy.gov/visas/visa-waiver-program/" target="_blank">Obtener o Renovar Visa Waiver</a></li>
                     <li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>
