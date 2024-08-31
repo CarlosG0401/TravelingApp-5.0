@@ -91,7 +91,7 @@ if ($ejecutar) {
         die();
     }
 
-    // Calcular el precio con IVA (supongamos que el IVA es del 19%)
+    
     $precio_base = $vuelo['precio']; // Precio base del vuelo
     $iva = $precio_base * 0.19; // Calcula el IVA
     $total = $precio_base + $iva; // Precio total con IVA
