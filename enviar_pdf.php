@@ -16,16 +16,14 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 
-// Obtener la ruta del archivo PDF desde el parámetro GET
-$archivo_pdf = $_GET['archivo'] ?? 'boleta_pago.pdf'; // Proporciona un valor por defecto en caso de que no se pase el parámetro
+$archivo_pdf = $_GET['archivo'] ?? 'boleta_pago.pdf'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Procesar el envío del formulario
     $correo_destino = $_POST['correo'] ?? null;
 
     if (filter_var($correo_destino, FILTER_VALIDATE_EMAIL)) {
-        // Aquí puedes usar PHPMailer para enviar el PDF por correo
-        $mail = new PHPMailer(true); // Habilitar excepciones
+        $mail = new PHPMailer(true); 
 
         try {
             $mail->isSMTP();
@@ -38,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $mail->setFrom('travelingweb9@gmail.com', 'TravelingWeb');
             $mail->addAddress($correo_destino);
-            $mail->addAttachment($archivo_pdf); // Adjuntar el archivo PDF
+            $mail->addAttachment($archivo_pdf); 
 
             $mail->isHTML(true);
             $mail->Subject = 'Copia de tu boleta de pago';
