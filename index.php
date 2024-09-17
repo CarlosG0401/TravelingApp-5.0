@@ -27,9 +27,9 @@
         </h2>
         <nav class="navigation">
             <a href="#">Home</a>
-            <a href="#">Service</a>
-            <a href="#">Nosotros</a>
-            <a href="#">Contacto</a>
+            <a href="service.php">Service</a>
+            <a href="nosotros.php">Nosotros</a>
+            <a href="contacto.php">Contacto</a>
             <button class="btnLogin-popup">Login</button>
         </nav>
     </header>
