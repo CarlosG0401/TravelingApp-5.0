@@ -1,9 +1,8 @@
 <?php
 session_start();
 include 'php/conexion_be.php';
-require('fpdf/fpdf.php'); // Asegúrate de que la ruta sea correcta
+require('fpdf/fpdf.php'); 
 
-// Captura la salida para evitar problemas con FPDF
 ob_start();
 
 // Verifica si el usuario ha iniciado sesión
