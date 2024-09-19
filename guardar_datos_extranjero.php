@@ -74,8 +74,8 @@ if (empty($errores)) {
             if ($extraNacionalidad == 'venezuela') {
                 echo "<p>Recomendaciones para ciudadanos venezolanos:</p>";
                 echo "<ul>";
-                echo "<li>Para renovar el RUT venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-venezolano' target='_blank'>Renovar RUT venezolano</a></li>";
-                echo "<li>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-venezolano' target='_blank'>Renovar pasaporte venezolano</a></li>";
+                echo "<li>Para renovar el RUT venezolano, sigue los siguientes pasos: <a href='https://www.saime.gob.ve/' target='_blank'>Renovar RUT venezolano</a></li>";
+                echo "<li>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href='https://info.saime.gob.ve/identificacion/pasaporte' target='_blank'>Renovar pasaporte venezolano</a></li>";
                 echo "<li>Para Nro ID y Nro Documento, escribe nuevamente dígitos válidos.</li>";
                 echo "</ul>";
             } elseif ($extraNacionalidad == 'colombia') {
@@ -148,8 +148,8 @@ if (empty($errores)) {
                     <?php
                     // Mostrar recomendaciones específicas para cada país
                     if ($extra_nacionalidad == 'venezuela') {
-                        echo "<li>Para renovar el RUT venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-venezolano' target='_blank'>Renovar RUT venezolano</a></li>";
-                        echo "<li>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-venezolano' target='_blank'>Renovar pasaporte venezolano</a></li>";
+                        echo "<li>Para renovar el RUT venezolano, sigue los siguientes pasos: <a href='https://www.saime.gob.ve/' target='_blank'>Renovar RUT venezolano</a></li>";
+                        echo "<li>Para renovar el pasaporte venezolano, sigue los siguientes pasos: <a href='https://info.saime.gob.ve/identificacion/pasaporte' target='_blank'>Renovar pasaporte venezolano</a></li>";
                     } elseif ($extra_nacionalidad == 'colombia') {
                         echo "<li>Para renovar el RUT colombiano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-rut-colombiano' target='_blank'>Renovar RUT colombiano</a></li>";
                         echo "<li>Para renovar el pasaporte colombiano, sigue los siguientes pasos: <a href='https://www.example.com/renovar-pasaporte-colombiano' target='_blank'>Renovar pasaporte colombiano</a></li>";
