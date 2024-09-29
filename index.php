@@ -188,11 +188,33 @@
         </div>
     </div>
 
+    <footer>
+        <div class="footer-content">
+            <div class="address-section">
+                <p>TravelingWeb</p>
+                <p class="address">Dirección: Av. Valle del Norte 123, Santiago, Chile</p>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3331.3025193668946!2d-70.62186111612631!3d-33.389270904863324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c8a91e528b09%3A0xaecac912421031a7!2sAv.%20del%20Parque%2C%20Huechuraba%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses-419!2scl!4v1727643079086!5m2!1ses-419!2scl" 
+                    width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="social-icons">
+                <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+                <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; TravelingWeb. Todos los derechos reservados.</p>
+            <p style="margin-top: 10px;">"Comprometidos con la calidad y el servicio desde 2024."</p>
+            <p>Contacto: <a href="mailto:info@tuempresa.com" style="color: #ccc;">info@travelingweb.com</a> | Teléfono: +22 444 663</p>
+            <p><a href="faq.html" style="color: #ccc; text-decoration: none;">Preguntas Frecuentes</a> | <a href="soporte.html" style="color: #ccc; text-decoration: none;">Soporte Técnico</a></p>
+            <p><a href="terminos.html" style="color: #ccc; text-decoration: none;">Términos y Condiciones</a> | <a href="privacidad.html" style="color: #ccc; text-decoration: none;">Política de Privacidad</a></p>
 
+        </div>
+    </footer>
 
     
-
-
     <script src="assets/script/scripts.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
