@@ -188,9 +188,9 @@ header {
 }
 
 .wrapper{
-    position: relative;
-    width: 400px;
-    height: 440px;
+    position: absolute;
+    width: 300px;
+    height: 540px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .5);
     border-radius: 20px;
@@ -202,6 +202,8 @@ header {
     overflow: hidden;
     transform: scale(0);
     transition: transform .5s ease, height .2s ease;
+    margin-bottom: 800px;
+    z-index: 100;
 }
 
 .wrapper.active-popup {
@@ -379,3 +381,111 @@ header .header-user {
 .header-user:hover {
     color: aqua; 
 }
+
+.info-boxes {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px; /* Espacio entre el formulario y los cuadros */
+    padding: 0 20px; /* Espacio lateral */
+    margin-top: 1200px;
+    margin-right: 20px;
+    overflow: hidden;
+    margin-bottom: 300px;
+    width: 7000px;
+    height: 300px;
+    z-index: 0;
+}
+
+.info-box {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para un efecto de profundidad */
+    margin: 10px;
+    flex: 1 1 30%;
+    margin-left: 20px;
+    width: 50%; /* Ancho de cada cuadro */
+    overflow: hidden;
+    z-index: 0;
+}
+
+.info-box h3 {
+    font-size: 1.5em; /* Tamaño de fuente para los títulos */
+    color: #162938; /* Color del texto */
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+.info-box p {
+    font-size: 1em; /* Tamaño de fuente para el contenido */
+    color: #162938; /* Color del texto */
+}
+
+.info-image {
+    margin-top: 900px;
+    margin-left: 100px;
+    z-index: 0;
+    width: 800px;
+    border-radius: 5%;
+}
+
+.imagen-santiago {
+    z-index: 3;
+    padding: 20px;
+    position: relative;
+    width: 350px;
+    height: 350px;
+    top:50px;
+    margin-top: 800px;
+    border-radius: 15%;
+}
+
+.exchange-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan si hay espacio limitado */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 20px auto; /* Centra el cuadro */
+    overflow: hidden;
+    
+    position: absolute;
+    width: 1900px;
+}
+
+.exchange-item {
+    display: flex;
+    align-items: center;
+    margin: 10px; /* Espacio entre elementos */
+    flex: 1 1 20%; /* Permite que cada elemento ocupe un 20% del ancho del contenedor */
+    max-width: 200px; /* Máximo ancho para cada elemento */
+    text-align: center; /* Centrar el texto */
+}
+
+.flag {
+    width: 30px; /* Ancho de las banderitas */
+    height: auto; /* Mantener la proporción de la imagen */
+    margin-right: 10px; /* Espacio entre la bandera y la tasa de cambio */
+}
+
+.exchange-rate {
+    font-weight: bold; /* Hacer que la tasa de cambio sea más destacada */
+}
+
+.animated-exchange {
+    display: flex; /* Muestra los elementos en una fila */
+    animation: slide-in-out 7s linear infinite; /* Ajusta la duración según sea necesario */
+}
+
+@keyframes slide-in-out {
+    0% {
+        transform: translateX(0); /* Comienza en la posición inicial */
+    }
+    100% {
+        transform: translateX(-50%); /* Se desliza fuera de la pantalla a la izquierda */
+    }
+}
+
+
+

@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 
+<img src="assets/images/imagen-agencia.jpeg" alt="Imagen-Agencia" class="info-image">
+<img src="assets/images/aeroporto-santiago-chile.jpeg" alt="Imagen-Santiago" class="imagen-santiago">
 <body>
 
     <header>
@@ -109,6 +111,86 @@
             </form>
         </div>
     </div>
+
+    <div class="info-boxes">
+        <div class="info-box">
+            <h3>¿Tienes tus documentos al día?</h3>
+            <p>Con nosotros puedes revisar si cuentas con los requisitos necesarios para entrar a un país de su elección.</p>
+        </div>
+        <div class="info-box">
+            <h3>¿Dudas con tu compra?</h3>
+            <p>Nosotros te asesoramos a escoger el precio y el mejor trayecto para tu tranquilidad.</p>
+        </div>
+        <div class="info-box">
+            <h3>¿Eres chileno o extranjero?</h3>
+            <p>Sin importar tu nacionalidad y estatus que tengas dentro de Chile, entregamos el mejor servicio posible para tu tranquilidad.</p>
+        </div>
+    </div>
+
+    <div class="exchange-container">
+        <div class="animated-exchange">
+            <div class="exchange-item">
+                <img src="assets/images/union.jpeg" alt="Euro" class="flag">
+                <span class="exchange-rate">1 EUR = 850 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/united.png" alt="Estados Unidos" class="flag">
+                <span class="exchange-rate">1 USD = 800 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/england.png" alt="Libra" class="flag">
+                <span class="exchange-rate">1 GBP = 1.200 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/bandera-de-brasil.jpg" alt="Real" class="flag">
+                <span class="exchange-rate">1 BRL = 167 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/argentina.png" alt="Peso Arg" class="flag">
+                <span class="exchange-rate">1 ARS = 0,93 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/colombia.png" alt="Peso Col" class="flag">
+                <span class="exchange-rate">1 COL = 0,21 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/peru.png" alt="Sol Peru" class="flag">
+                <span class="exchange-rate">1 PEN = 241 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/union.jpeg" alt="Euro" class="flag">
+                <span class="exchange-rate">1 EUR = 850 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/united.png" alt="Estados Unidos" class="flag">
+                <span class="exchange-rate">1 USD = 800 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/england.png" alt="Libra" class="flag">
+                <span class="exchange-rate">1 GBP = 1.200 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/bandera-de-brasil.jpg" alt="Real" class="flag">
+                <span class="exchange-rate">1 BRL = 167 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/argentina.png" alt="Peso Arg" class="flag">
+                <span class="exchange-rate">1 ARS = 0,93 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/colombia.png" alt="Peso Col" class="flag">
+                <span class="exchange-rate">1 COL = 0,21 CLP</span>
+            </div>
+            <div class="exchange-item">
+                <img src="assets/images/peru.png" alt="Sol Peru" class="flag">
+                <span class="exchange-rate">1 PEN = 241 CLP</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    
 
 
     <script src="assets/script/scripts.js"></script>
